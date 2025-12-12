@@ -8,7 +8,7 @@
 [![YOLOv8](https://img.shields.io/badge/YOLOv8-8.1.0-green.svg)](https://github.com/ultralytics/ultralytics)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A modern, responsive web application for **Foreign Object Debris (FOD) detection** on airport runways. Built with React frontend and Flask backend, using **YOLOv8** for real-time object detection, **Autoencoder** for anomaly detection, **SAM (Segment Anything Model)** for precise segmentation, and **MongoDB** for data persistence.
+A modern, responsive web application for **Foreign Object Debris (FOD) detection** on airport runways. Built with React frontend and Flask backend, using **YOLOv8** (primary detection model) with optional **ONNX** support for optimized inference, **Autoencoder** for complementary anomaly detection, **SAM (Segment Anything Model)** for precise segmentation, and **MongoDB** for data persistence.
 
 ## ✨ Features
 
@@ -31,8 +31,9 @@ A modern, responsive web application for **Foreign Object Debris (FOD) detection
 
 ### Backend
 - **Flask** for RESTful API server
-- **YOLOv8 (Ultralytics)** for object detection
-- **Autoencoder (PyTorch)** for anomaly detection
+- **YOLOv8 (Ultralytics)** - Primary object detection model (PyTorch)
+- **ONNX Runtime** - Optional optimized inference format for faster performance
+- **Autoencoder (PyTorch)** - Complementary anomaly detection
 - **SAM (Segment Anything Model)** for image segmentation
 - **MongoDB** for data storage and retrieval
 - **OpenCV** for image/video processing
@@ -132,10 +133,11 @@ projet_fod/
 │   ├── main.tsx               # Application entry point
 │   └── index.css              # Global styles and Tailwind imports
 ├── backend/
-│   └── autoencoder_fod.pth    # Pre-trained Autoencoder model for anomaly detection
+│   ├── autoencoder_fod.pth    # Pre-trained Autoencoder model (optional, for anomaly detection)
+│   └── best.onnx              # ONNX format model (optional, for optimized inference)
 └── yolov8n_fod_final_v7/
     └── weights/
-        └── best.pt            # Pre-trained YOLOv8 model
+        └── best.pt            # Pre-trained YOLOv8 model (primary detection model)
 ```
 
 ## Usage
@@ -163,9 +165,40 @@ projet_fod/
 - Smooth transitions and hover effects
 - Accessible UI with proper contrast and spacing
 
-## 🔬 Anomaly Detection with Autoencoder
+## 🎯 YOLOv8 Object Detection (Primary Model)
 
-The system includes an **Autoencoder-based anomaly detection** model that complements the YOLOv8 object detection. This dual approach provides:
+The system uses **YOLOv8 (You Only Look Once version 8)** as the primary object detection model for FOD detection.
+
+### Model Details
+
+- **Model File**: `yolov8n_fod_final_v7/weights/best.pt`
+- **Architecture**: YOLOv8n (nano variant for optimal speed/accuracy balance)
+- **Framework**: PyTorch / Ultralytics
+- **Input Size**: 640x640 pixels (configurable)
+- **Device Support**: CPU and CUDA (GPU)
+- **Confidence Threshold**: 0.25 (configurable)
+
+### Features
+
+- **Real-time Detection**: Fast inference for both images and videos
+- **Multi-class Detection**: Trained specifically for FOD objects
+- **Object Tracking**: ByteTrack integration for video frame tracking
+- **High Accuracy**: Pre-trained model optimized for airport runway scenarios
+
+### ONNX Support (Optional)
+
+For optimized inference, the system also supports **ONNX Runtime**:
+
+- **Model File**: `backend/best.onnx` (optional)
+- **Benefits**: Faster inference, cross-platform compatibility
+- **Usage**: Switch between YOLOv8 PyTorch and ONNX via `/api/model/switch` endpoint
+- **Installation**: `pip install onnxruntime` or `pip install onnxruntime-gpu` for GPU support
+
+The YOLOv8 model is automatically loaded at server startup. Check the server logs to confirm the model status.
+
+## 🔬 Anomaly Detection with Autoencoder (Complementary)
+
+The system includes an **Autoencoder-based anomaly detection** model that **complements** the YOLOv8 object detection. This dual approach provides:
 
 ### How It Works
 
@@ -202,7 +235,39 @@ Check if the backend is running and the models are loaded.
 {
   "status": "ok",
   "model_loaded": true,
+  "model_type": "yolo",
+  "onnx_available": false,
   "autoencoder_available": true
+}
+```
+
+### GET /api/model/current
+Get information about the currently loaded model.
+
+**Response**:
+```json
+{
+  "model_type": "yolo",
+  "yolo_available": true,
+  "onnx_available": false
+}
+```
+
+### POST /api/model/switch
+Switch between YOLOv8 PyTorch and ONNX models.
+
+**Request**: JSON body
+```json
+{
+  "model_type": "yolo"  // or "onnx"
+}
+```
+
+**Response**:
+```json
+{
+  "success": true,
+  "modelType": "yolo"
 }
 ```
 
@@ -258,13 +323,15 @@ Upload a **video** for FOD detection with frame-by-frame analysis and object tra
 
 ## Notes
 
-- The YOLOv8 model is loaded once at server startup
-- The Autoencoder model is automatically loaded if `autoencoder_fod.pth` is present in the backend directory
-- Images are processed with a minimum confidence threshold of 0.25 for YOLOv8
+- **YOLOv8** is the primary detection model, loaded automatically at server startup
+- **ONNX** support is optional - place `best.onnx` in the backend directory and switch via API
+- **Autoencoder** is complementary - automatically loaded if `autoencoder_fod.pth` is present
+- Images are processed with a minimum confidence threshold of 0.25 for YOLOv8 (configurable)
 - Anomaly detection threshold is configurable (default: 0.1)
 - Bounding box coordinates are returned as percentages of image dimensions
 - Risk levels are automatically determined based on confidence scores
-- Both models support CPU and GPU (CUDA) inference
+- All models support CPU and GPU (CUDA) inference
+- Video processing uses YOLOv8 with ByteTrack for object tracking across frames
 
 ## 📚 Additional Documentation
 
