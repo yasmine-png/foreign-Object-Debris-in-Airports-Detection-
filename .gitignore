@@ -39,6 +39,7 @@ ENV/
 
 # Model files (too large for git)
 *.pt
+!yolov8n_fod_final_v7/weights/best.pt
 *.pth
 *.onnx
 *.h5
