@@ -41,6 +41,7 @@ ENV/
 *.pt
 !yolov8n_fod_final_v7/weights/best.pt
 *.pth
+!backend/autoencoder_fod.pth
 *.onnx
 *.h5
 *.pb
