@@ -1,0 +1,82 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies
+node_modules
+dist
+dist-ssr
+*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+*.egg-info/
+*.egg
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Model files (too large for git)
+*.pt
+*.pth
+*.onnx
+*.h5
+*.pb
+*.tflite
+
+# Video files
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.flv
+
+# Test images and data
+images/
+annotated_videos/
+sortie/
+*.jpg
+*.jpeg
+*.png
+!yolov8n_fod_fod_final_v7/image_noramales/*.png
+
+# MongoDB exports
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!tsconfig.node.json
+!postcss.config.js
+!tailwind.config.js
+!vite.config.ts
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS files
+Thumbs.db
+.DS_Store
+

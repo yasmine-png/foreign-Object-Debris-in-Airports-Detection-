@@ -1,0 +1,35 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+*.egg-info/
+dist/
+build/
+*.log
+.DS_Store
+uploads/
+sortie/
+annotated_videos/
+
+# Model files (too large for git)
+*.pt
+*.pth
+*.onnx
+
+# Video files
+*.mp4
+*.avi
+*.mov
+
+# MongoDB exports
+mongodb_export.json
+
+# Environment variables
+.env
+.env.local
+
