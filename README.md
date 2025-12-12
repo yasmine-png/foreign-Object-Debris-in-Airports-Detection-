@@ -1,15 +1,25 @@
-# FOD Detection - Airport Runway UI
+# 🛫 FOD Detection System - Airport Runway Safety
 
-A modern, responsive web application for Foreign Object Debris (FOD) detection on airport runways. Built with React frontend and Flask backend, using YOLOv8 for object detection.
+> **Foreign Object Debris (FOD) Detection System** - A comprehensive AI-powered solution for detecting and managing foreign objects on airport runways to enhance aviation safety.
 
-## Features
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![React](https://img.shields.io/badge/React-18.2-blue.svg)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.2-blue.svg)](https://www.typescriptlang.org/)
+[![YOLOv8](https://img.shields.io/badge/YOLOv8-8.1.0-green.svg)](https://github.com/ultralytics/ultralytics)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-- **Detection Workspace**: Large, interactive area for viewing images with detection overlays
-- **Image Upload**: Upload images for FOD detection
-- **Real-time Detection Display**: Bounding boxes with risk level indicators from YOLOv8 model
-- **Results Panel**: Detailed list of detected objects with filtering and sorting
-- **Model Information**: Display of selected AI models and deployment tags
-- **YOLOv8 Integration**: Pre-trained YOLOv8 model for accurate FOD detection
+A modern, responsive web application for **Foreign Object Debris (FOD) detection** on airport runways. Built with React frontend and Flask backend, using **YOLOv8** for real-time object detection, **SAM (Segment Anything Model)** for precise segmentation, and **MongoDB** for data persistence.
+
+## ✨ Features
+
+- 🎯 **Real-time Object Detection**: YOLOv8-powered detection with high accuracy
+- 🖼️ **Image & Video Processing**: Support for both image uploads and video analysis
+- 🎨 **Interactive UI**: Modern, responsive dashboard with real-time visualization
+- 📊 **Risk Assessment**: Automatic risk level classification (High/Medium/Low)
+- 🔍 **Advanced Segmentation**: SAM (Segment Anything Model) integration for precise object segmentation
+- 🗄️ **Data Persistence**: MongoDB integration for storing detection results and metadata
+- 📈 **Analytics Dashboard**: Detailed results panel with filtering and sorting capabilities
+- 🚀 **Production Ready**: Docker support and deployment configurations included
 
 ## Tech Stack
 
@@ -19,8 +29,11 @@ A modern, responsive web application for Foreign Object Debris (FOD) detection o
 - **Vite** for build tooling
 
 ### Backend
-- **Flask** for API server
+- **Flask** for RESTful API server
 - **YOLOv8 (Ultralytics)** for object detection
+- **SAM (Segment Anything Model)** for image segmentation
+- **MongoDB** for data storage and retrieval
+- **OpenCV** for image/video processing
 - **Python 3.8+**
 
 ## Getting Started
@@ -156,7 +169,30 @@ Upload an image for FOD detection. Returns detected objects with bounding boxes,
 - Bounding box coordinates are returned as percentages of image dimensions
 - Risk levels are automatically determined based on confidence scores
 
-## License
+## 📚 Additional Documentation
 
-MIT
+- [Backend Documentation](backend/README.md)
+- [MongoDB Setup Guide](MONGODB_SETUP.md)
+- [SAM Activation Guide](backend/ACTIVATION_SAM.md)
+- [Deployment Instructions](DEPLOY_INSTRUCTIONS.md)
+- [Quick Start Guide](DEMARRAGE_INTERFACE.md)
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 👤 Author
+
+**Yasmine**
+
+- GitHub: [@yasmine-png](https://github.com/yasmine-png)
+
+## 🙏 Acknowledgments
+
+- [Ultralytics YOLOv8](https://github.com/ultralytics/ultralytics) for the detection model
+- [Segment Anything Model (SAM)](https://github.com/facebookresearch/segment-anything) for segmentation capabilities
 
