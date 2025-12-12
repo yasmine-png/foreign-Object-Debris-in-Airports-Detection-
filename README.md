@@ -142,10 +142,18 @@ projet_fod/
 
 1. **Start the Backend**: Make sure the Flask server is running on port 5000
 2. **Start the Frontend**: Launch the React development server
-3. **Upload an Image**: Click "Upload Image" and select an image file
-4. **View Detections**: The YOLOv8 model will process the image and display detected objects with bounding boxes
+3. **Upload Media**: 
+   - **For Images**: Click "Upload Image" and select an image file (JPG, PNG, etc.)
+   - **For Videos**: Click "Upload Video" and select a video file (MP4, AVI, MOV, etc.)
+4. **View Detections**: 
+   - **Images**: The YOLOv8 model processes the image and displays detected objects with bounding boxes
+   - **Videos**: The system processes each frame with YOLOv8 tracking (ByteTrack) and displays detections across all frames
 5. **Filter Results**: Use the filters in the Results Panel to sort by risk level or confidence
 6. **Review Details**: Each detection shows the object label, confidence score, risk level, and position
+7. **Video Features**: 
+   - Track objects across frames with unique track IDs
+   - View frame-by-frame detections
+   - Export results to MongoDB for analysis
 
 ## Design Notes
 
@@ -199,7 +207,7 @@ Check if the backend is running and the models are loaded.
 ```
 
 ### POST /api/detect
-Upload an image for FOD detection. Returns detected objects with bounding boxes, confidence scores, and risk levels.
+Upload an **image** for FOD detection. Returns detected objects with bounding boxes, confidence scores, and risk levels.
 
 **Request**: multipart/form-data with `image` field
 
@@ -215,6 +223,38 @@ Upload an image for FOD detection. Returns detected objects with bounding boxes,
   }
 }
 ```
+
+### POST /api/detect-video
+Upload a **video** for FOD detection with frame-by-frame analysis and object tracking.
+
+**Request**: multipart/form-data with `video` field
+
+**Response**: JSON with frame-by-frame detections and video metadata:
+```json
+{
+  "frames": [
+    {
+      "frameNumber": 0,
+      "detections": [...],
+      "tracks": [...]
+    }
+  ],
+  "totalFrames": 100,
+  "processedFrames": 100,
+  "fps": 30.0,
+  "duration": 3.33,
+  "hasDangerAlert": true,
+  "maxAlertLevel": "High",
+  "uniqueTracks": 5,
+  "mongoId": "..."
+}
+```
+
+**Video Processing Features**:
+- Frame-by-frame object detection with YOLOv8
+- Object tracking across frames using ByteTrack
+- Automatic MongoDB storage of results
+- Support for MP4, AVI, MOV formats
 
 ## Notes
 
