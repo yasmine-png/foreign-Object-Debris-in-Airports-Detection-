@@ -352,8 +352,10 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 👤 Author
 
 **Yasmine**
+**Oumaima**
 
 - GitHub: [@yasmine-png](https://github.com/yasmine-png)
+- GitHub: [oumaima221](https://github.com/oumaima221)
 
 ## 🙏 Acknowledgments
 
